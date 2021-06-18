@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import 'answer.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,9 +20,19 @@ class _MyAppState extends State<MyApp> {
     print(_questionIndex);
   }
 
-  var questions = [
-    'What\'s your favourite colour?',
-    'What\'s you favourite animal?'
+  static const List questions = [
+    {
+      'questionText': 'What\'s your favourite colour?',
+      'answers': ['Black', 'Red', 'Green', 'White'],
+    },
+    {
+      'questionText': 'What\'s your favourite animal?',
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    },
+    {
+      'questionText': 'What\'s your favourite programming language?',
+      'answers': ['JavaScript', 'Dart', 'Python', 'Java'],
+    },
   ];
 
   @override
@@ -33,10 +44,12 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            Question(questions[_questionIndex]),
-            ElevatedButton(onPressed: _answerQuestion, child: Text('Answer 1')),
-            ElevatedButton(onPressed: _answerQuestion, child: Text('Answer 2')),
-            ElevatedButton(onPressed: _answerQuestion, child: Text('Answer 3')),
+            Question(
+              questions[_questionIndex]['questionText'],
+            ),
+            ...questions[_questionIndex]['answers'].map((answer) {
+              return Answer(_answerQuestion, answer);
+            })
           ],
         ),
       ),
